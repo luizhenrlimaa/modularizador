@@ -4,6 +4,6 @@
 
 * Possui um log que permite realizar o acompanhamento dos sites e o horário em que o mesmo foi verificado. 
 
-* Realizado com o intuito de conhecer sobre a linguagem, tenho a possibilidade de empregar diferentes funcionalidades.
+* Realizado com o intuito de conhecer sobre a linguagem, tendo a possibilidade de empregar diferentes funcionalidades.
 
 
