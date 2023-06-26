@@ -73,8 +73,10 @@ func iniciarMonitoramento() {
 	fmt.Println("Monitorando...")
 
 	//slice
-	sites := []string{"https://www.alura.com.br",
-		"https://www.caelum.com.br", "https://www.google.com.br"}
+	// sites := []string{"https://www.alura.com.br",
+	// 	"https://www.caelum.com.br", "https://www.google.com.br"}
+
+	sites := leSitesDoArquivo()
 
 	// fmt.Println(sites)
 	for i := 0; i < monitoramentos; i++ {
@@ -92,7 +94,11 @@ func iniciarMonitoramento() {
 
 func testaSite(site string) {
 
-	resp, _ := http.Get(site)
+	resp, err := http.Get(site)
+
+	if err != nil {
+		fmt.Println("Ocorreu um erro:", err)
+	}
 
 	if resp.StatusCode == 200 {
 		fmt.Println("Site:", site, "foi carregado com sucesso!")
@@ -101,4 +107,17 @@ func testaSite(site string) {
 			resp.StatusCode)
 	}
 
+}
+
+func leSitesDoArquivo() []string {
+
+	var sites []string
+
+	arquivo, err := os.Open("sites.txt")
+
+	if err != nil {
+		fmt.Println("Ocorreu um erro:", err)
+	}
+	fmt.Println(arquivo)
+	return sites
 }
