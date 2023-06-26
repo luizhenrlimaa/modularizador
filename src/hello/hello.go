@@ -10,10 +10,26 @@ func main() {
 
 	exibeIntroducao()
 
-	exibeMenu()
+	for {
+		exibeMenu()
 
-	comando := leComando()
+		comando := leComando()
 
+		switch comando {
+		case 1:
+			iniciarMonitoramento()
+		case 2:
+			fmt.Println("Exibindo Logs...")
+		case 0:
+			fmt.Println("Saindo do programa...")
+			os.Exit(0)
+		default:
+			fmt.Printf("Digite um comando que seja válido!")
+			//Indica que ocorreu algum erro
+			os.Exit(-1)
+		}
+
+	}
 	// if comando == 1 {
 	// 	fmt.Println("Monitorando...")
 	// } else if comando == 2 {
@@ -23,20 +39,6 @@ func main() {
 	// } else {
 	// 	fmt.Printf("Digite um comando que seja válido!")
 	// }
-
-	switch comando {
-	case 1:
-		iniciarMonitoramento()
-	case 2:
-		fmt.Println("Exibindo Logs...")
-	case 0:
-		fmt.Println("Saindo do programa...")
-		os.Exit(0)
-	default:
-		fmt.Printf("Digite um comando que seja válido!")
-		//Indica que ocorreu algum erro
-		os.Exit(-1)
-	}
 	// Para verificar o tipo da váriavel
 	// fmt.Println("O tipo da variavel é", reflect.TypeOf(versao))
 }
@@ -59,13 +61,28 @@ func leComando() int {
 	fmt.Scan(&comandoLido)
 	//	fmt.Println("O endereço da minha variável comando é", &comando)
 	//	fmt.Println("O comando escolhido foi,", comandoLido)
-
 	return comandoLido
 }
 
 func iniciarMonitoramento() {
 	fmt.Println("Monitorando...")
-	site := "https://www.alura.com.br"
+
+	//slice
+	sites := []string{"https://www.alura.com.br",
+		"https://www.caelum.com.br", "https://www.google.com.br"}
+
+	// fmt.Println(sites)
+
+	// range obtem a posicao e quem tem aquela posição
+	for i, site := range sites {
+		fmt.Println("Testando site", i, ":", site)
+		testaSite(site)
+	}
+
+}
+
+func testaSite(site string) {
+
 	resp, _ := http.Get(site)
 
 	if resp.StatusCode == 200 {
