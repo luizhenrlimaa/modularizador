@@ -116,24 +116,33 @@ func leSitesDoArquivo() []string {
 
 	var sites []string
 
+	//Abertura de arquivo
 	arquivo, err := os.Open("sites.txt")
 
+	// Tratamento de erro
 	if err != nil {
 		fmt.Println("Ocorreu um erro:", err)
 	}
 
 	leitor := bufio.NewReader(arquivo)
 	for {
+
+		//Leitura da linha do arquivp até a quebra de linha
 		linha, err := leitor.ReadString('\n')
+
+		//Remove a quebra de linha
 		linha = strings.TrimSpace(linha)
 
+		//Adicionando site no slice
 		sites = append(sites, linha)
 
+		//Forçando parada ao chegar no final do arquivo
 		if err == io.EOF {
 			break
 		}
 	}
 
+	// Fechando arquivo
 	arquivo.Close()
 
 	return sites
