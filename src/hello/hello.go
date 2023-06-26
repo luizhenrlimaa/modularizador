@@ -1,14 +1,17 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"io"
 	"net/http"
 	"os"
+	"strings"
 	"time"
 )
 
 const monitoramentos = 3
-const delay = 6
+const delay = 5
 
 func main() {
 
@@ -82,7 +85,7 @@ func iniciarMonitoramento() {
 	for i := 0; i < monitoramentos; i++ {
 		// range obtem o indice e o item correspondete do slice
 		for i, site := range sites {
-			fmt.Println("Testando site", i, ":", site)
+			fmt.Println("Testando site", i+1, ":", site)
 			testaSite(site)
 		}
 		time.Sleep(delay * time.Second)
@@ -118,6 +121,20 @@ func leSitesDoArquivo() []string {
 	if err != nil {
 		fmt.Println("Ocorreu um erro:", err)
 	}
-	fmt.Println(arquivo)
+
+	leitor := bufio.NewReader(arquivo)
+	for {
+		linha, err := leitor.ReadString('\n')
+		linha = strings.TrimSpace(linha)
+
+		sites = append(sites, linha)
+
+		if err == io.EOF {
+			break
+		}
+	}
+
+	arquivo.Close()
+
 	return sites
 }
