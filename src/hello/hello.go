@@ -4,7 +4,11 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"time"
 )
+
+const monitoramentos = 3
+const delay = 6
 
 func main() {
 
@@ -60,7 +64,8 @@ func leComando() int {
 	var comandoLido int
 	fmt.Scan(&comandoLido)
 	//	fmt.Println("O endereço da minha variável comando é", &comando)
-	//	fmt.Println("O comando escolhido foi,", comandoLido)
+	// fmt.Println("O comando escolhido foi,", comandoLido)
+	fmt.Println("")
 	return comandoLido
 }
 
@@ -72,13 +77,17 @@ func iniciarMonitoramento() {
 		"https://www.caelum.com.br", "https://www.google.com.br"}
 
 	// fmt.Println(sites)
-
-	// range obtem a posicao e quem tem aquela posição
-	for i, site := range sites {
-		fmt.Println("Testando site", i, ":", site)
-		testaSite(site)
+	for i := 0; i < monitoramentos; i++ {
+		// range obtem o indice e o item correspondete do slice
+		for i, site := range sites {
+			fmt.Println("Testando site", i, ":", site)
+			testaSite(site)
+		}
+		time.Sleep(delay * time.Second)
+		fmt.Println("")
 	}
 
+	fmt.Println("")
 }
 
 func testaSite(site string) {
